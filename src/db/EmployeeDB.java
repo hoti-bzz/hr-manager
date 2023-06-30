@@ -5,6 +5,7 @@ import models.Employee;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import util.HRManagerUtil;
 
@@ -18,14 +19,33 @@ public class EmployeeDB {
 
     public void addEmployee(Employee employee) {
         //TODO: Implement
+        employees = getEmployees();
+        employees.add(employee);
+        System.out.println("added!");
+
+
     }
 
-    public void deleteEmployee(Employee employee) {
+    public void deleteEmployee(String id) {
         //TODO: Implement
+        for (int i = 0; i < getEmployees().size(); i++){
+            if (getEmployees().get(i).getId().equals(id)){
+                getEmployees().remove(id);
+            } else {
+                System.out.println("Can't delete employee. Employee doesn't exist.");
+            }
+        }
     }
 
     public void updateEmployee(Employee employee) {
         //TODO: Implement
+        for (int i = 0; i < getEmployees().size(); i++){
+            if (getEmployees().get(i) == employee){
+                getEmployees().set(i, employee);
+            } else {
+                System.out.println("Can't update employee. Employee doesn't exist.");
+            }
+        }
     }
 
     private void addMockData() {
