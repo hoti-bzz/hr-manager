@@ -61,7 +61,7 @@ public class HRManager {
 
     private static void showMenu(int selectedMenuId) throws ParseException {
 
-        EmployeeDB employeeDB;
+        EmployeeDB employeeDB = null;
 
 
         switch (selectedMenuId) {
@@ -85,7 +85,9 @@ public class HRManager {
 
                 System.out.println("Date: (Format:[1980-12-12])");
                 scanner = new Scanner(System.in);
-                String date = scanner.next();
+                long date = Long.parseLong(scanner.next());
+                Date dateinsert = new SimpleDateFormat("dd.MM.yyyy").parse(String.valueOf(date));
+
 
                 System.out.print("Salary: ");
                 double salary = reader.nextDouble();
@@ -94,8 +96,10 @@ public class HRManager {
                 scanner = new Scanner(System.in);
                 long employementdate = Long.parseLong(scanner.next());
                 employementdate = Date.parse(String.valueOf(employementdate));
+                Date employmentdateinsert = new SimpleDateFormat("dd.MM.yyyy").parse(String.valueOf(employementdate));
 
-                Employee employee = new Employee(prename, surname, job, date, salary, employementdate);
+                Employee employee = new Employee(prename, surname, job, dateinsert, salary, employmentdateinsert);
+                employeeDB.addEmployee(employee);
 
                 view.showAddEmployee();
                 break;
@@ -128,11 +132,13 @@ public class HRManager {
 
                 employee = new Employee(prenameedit, surnameedit, jobedit, date2, salaryedit, date1);
 
+                employeeDB.updateEmployee(employee);
+
                 view.showEditEmployee();
                 break;
             case 4:
                 employeeDB = new EmployeeDB();
-                employeeDB.getEmployees();
+                System.out.println(employeeDB.getEmployees());
                 view.showListEmployees();
                 break;
             case 5:
